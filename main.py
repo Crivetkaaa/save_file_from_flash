@@ -31,6 +31,7 @@ class Reader:
             except:
                 cls.create_folder(f"{folder_name}\{dir[i]}")
                 cls.download_files(f"{disk_id}\{dir[i]}", f"{folder_name}\{dir[i]}")
+        cls.check = False
 
 def main():
     classobject = Reader()
