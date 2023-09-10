@@ -16,7 +16,6 @@ class Reader:
     def wait_falsh(cls):
         for disk in c.Win32_LogicalDisk():
             if disk.Description == "Съемный диск":
-                print(disk.DeviceID)
                 cls.download_files(disk.DeviceID, disk.VolumeSerialNumber, disk.VolumeName)
     
     @classmethod
