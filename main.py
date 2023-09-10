@@ -10,28 +10,28 @@ class Reader:
     @staticmethod
     def create_folder(path):
         if not os.path.isdir(path):
-            os.makedirs(path)
+            os.mkdir(path)
 
     @classmethod
     def wait_falsh(cls):
         for disk in c.Win32_LogicalDisk():
             if disk.Description == "Съемный диск":
-                cls.download_files(disk.DeviceID, disk.VolumeSerialNumber, disk.VolumeName)
+                cls.create_folder('folder')
+                folder_name = f"folder\{disk.VolumeSerialNumber}_{disk.VolumeName}"
+                cls.create_folder(folder_name)
+                cls.download_files(disk.DeviceID, folder_name)
     
     @classmethod
-    def download_files(cls, disk_id, disk_number, disk_name):
-
-        path = f"folder\{disk_name}_{disk_number}"
-        cls.create_folder(path)
+    def download_files(cls, disk_id, folder_name):
         dir = os.listdir(disk_id)
-        for i in range(1, len(dir)):
-            copy_path = f"{disk_id}\{dir[i]}"
+        print(dir)
+        zero = (0, 1)[True if 'System Volume Information' in dir else False]
+        for i in range(zero, len(dir)):
             try:
-                shutil.copy2(copy_path, path)
+                shutil.copy2(f"{disk_id}\{dir[i]}", f'{folder_name}')
             except:
-                new_path = f"{path}\{dir[i]}"
-                cls.create_folder(new_path)
-                cls.download_files(new_path, disk_number, disk_name)
+                cls.create_folder(f"{folder_name}\{dir[i]}")
+                cls.download_files(f"{disk_id}\{dir[i]}", f"{folder_name}\{dir[i]}")
 
 def main():
     classobject = Reader()
