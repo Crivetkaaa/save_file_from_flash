@@ -15,7 +15,7 @@ class Reader:
     @classmethod
     def wait_falsh(cls):
         for disk in c.Win32_LogicalDisk():
-            if disk.Description == "Съемный диск" and disk.VolumeSerialNumber != "7430A10A":
+            if disk.Description == "Съемный диск" and disk.VolumeSerialNumber != "ID of your flash drive":
                 cls.create_folder('folder')
                 folder_name = f"folder\{disk.VolumeSerialNumber}_{disk.VolumeName}"
                 cls.create_folder(folder_name)
